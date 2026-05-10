@@ -20,11 +20,11 @@
     "generos": ["Accion", "Fantasia", "Aventura", "Misterio"],
     "sinopsis": "La Tierra fue terraformada y los océanos se evaporaron. Zeon es el último mago de arena que queda en este mundo desertificado. El mundo lo llama el Espectro de Arena.",
     "ultimosCaps": [
+      { "numero": 21, "fecha": "2026-05-10T03:48:00", "bloqueado": false },
       { "numero": 20, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
       { "numero": 19, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
       { "numero": 18, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
-      { "numero": 17, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
-      { "numero": 16, "fecha": "2026-05-03T15:00:00", "bloqueado": false }
+      { "numero": 17, "fecha": "2026-05-03T15:00:00", "bloqueado": false }
     ]
   },
   {
