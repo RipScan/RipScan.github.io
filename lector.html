@@ -10,7 +10,6 @@
       gtag('config', 'G-JRRQMWL5VS');
     </script>
     
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RipScan | Lector</title>
     <link rel="icon" type="image/png" href="favicon.png">
@@ -31,9 +30,6 @@
             color: var(--text-main); 
             font-family: 'Inter', sans-serif; 
             line-height: 1.6;
-            /* Protección: Evita selección de texto en toda la página */
-            user-select: none;
-            -webkit-user-select: none;
         }
 
         header { 
@@ -69,15 +65,34 @@
         .btn { color: white; text-decoration: none; background: #1a1a1a; padding: 10px 20px; border-radius: 6px; font-weight: 600; border: 1px solid #333; transition: 0.3s; }
         .btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 
-        /* Protección: Las imágenes no responden al mouse y no se pueden arrastrar */
+        /* NUEVA PROTECCIÓN: Capa invisible sobre las imágenes */
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .img-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='); /* Imagen 1x1 transparente */
+        }
+
         .lector-img { 
             width: 100%; 
-            max-width: 800px; 
-            display: block; 
-            margin: 0 auto; 
-            pointer-events: none;
-            -webkit-user-drag: none;
-            user-select: none;
+            display: block;
+        }
+
+        #comentarios-section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: var(--bg-surface);
+            border-radius: 8px;
+            border: 1px solid #333;
         }
 
         @media (max-width: 600px) {
@@ -119,24 +134,19 @@
 
     <div id="container" style="padding-top:20px;"></div>
 
+    <div id="comentarios-section">
+        <h3 style="color: var(--accent-primary); margin-bottom: 20px;">Comentarios del Capítulo</h3>
+        <script type="text/javascript">
+            var idcomments_acct = '27b2e72b91699e3f8ac5d0d5f027dafc';
+            var idcomments_post_id = 'ripscan-' + (new URLSearchParams(window.location.search).get('manga')) + '-cap-' + (new URLSearchParams(window.location.search).get('cap'));
+            var idcomments_post_url = window.location.href;
+        </script>
+        <span id="IDCommentsPostTitle" style="display:none"></span>
+        <script type='text/javascript' src='https://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+    </div>
+
     <script>
-        // --- 1. PROTECCIÓN DE IMÁGENES ---
-        // Bloquea clic derecho en toda la página
-        document.addEventListener('contextmenu', e => e.preventDefault());
-
-        // Bloquea atajos de teclado (F12, Ctrl+U, Ctrl+S, etc.)
-        document.addEventListener('keydown', e => {
-            if (
-                e.key === "F12" || 
-                (e.ctrlKey && (e.key === "u" || e.key === "s" || e.key === "p")) || 
-                (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C"))
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // --- 2. LÓGICA DEL LECTOR ---
+        // LÓGICA DEL LECTOR
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
@@ -174,36 +184,41 @@
             document.getElementById('btnPrev').style.display = "none";
         }
 
-        window.addEventListener('load', () => {
-            let readChapters = JSON.parse(localStorage.getItem(`read_${id}`) || '[]');
-            if (!readChapters.includes(cap)) {
-                readChapters.push(cap);
-                localStorage.setItem(`read_${id}`, JSON.stringify(readChapters));
-            }
-        });
+        // Crear el contenedor de cada imagen con el "protector" encima
+        function appendProtectedImage(src) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'img-wrapper';
+            
+            const img = new Image();
+            img.src = src;
+            img.className = "lector-img";
+            img.alt = `ripscan_cap_${cap}_page`; // Nombre visual falso
+            
+            wrapper.appendChild(img);
+            document.getElementById('container').appendChild(wrapper);
+        }
 
         function loadSingleImage(filename, callback) {
-            const img = new Image();
-            img.src = `mangas/${id}/cap-${cap}/${filename}`;
-            img.className = "lector-img";
-            img.setAttribute('draggable', 'false'); // Extra seguridad por JS
-            img.onload = () => { 
-                document.getElementById('container').appendChild(img); 
+            const path = `mangas/${id}/cap-${cap}/${filename}`;
+            const imgCheck = new Image();
+            imgCheck.src = path;
+            imgCheck.onload = () => { 
+                appendProtectedImage(path);
                 if(callback) callback(); 
             };
-            img.onerror = () => { if(callback) callback(); }; 
+            imgCheck.onerror = () => { if(callback) callback(); }; 
         }
 
         function loadNumberedPages(pageNumber) {
-            const img = new Image();
-            img.src = `mangas/${id}/cap-${cap}/${String(pageNumber).padStart(3, '0')}.png`;
-            img.className = "lector-img";
-            img.setAttribute('draggable', 'false'); // Extra seguridad por JS
-            img.onload = () => { 
-                document.getElementById('container').appendChild(img); 
+            const filename = `${String(pageNumber).padStart(3, '0')}.png`;
+            const path = `mangas/${id}/cap-${cap}/${filename}`;
+            const imgCheck = new Image();
+            imgCheck.src = path;
+            imgCheck.onload = () => { 
+                appendProtectedImage(path);
                 loadNumberedPages(pageNumber + 1); 
             };
-            img.onerror = () => { 
+            imgCheck.onerror = () => { 
                 loadSingleImage('999_creditos.png');
             };
         }
