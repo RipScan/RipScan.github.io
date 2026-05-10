@@ -50,6 +50,7 @@
     "generos": ["Accion", "Aventura", "Ecchi", "Reencarnacion"],
     "sinopsis": "Mientras la humanidad buscaba un camino hacia la evolución, yo me convertí en su pionero. ¡Este es el viaje de un jugador que dobla el mundo a su voluntad como si fuera un juego!",
     "ultimosCaps": [
+      { "numero": 13, "fecha": "2026-05-10T01:18:00", "bloqueado": false },
       { "numero": 12, "fecha": "2026-05-08T01:18:00", "bloqueado": false },
       { "numero": 11, "fecha": "2026-05-03T19:28:00", "bloqueado": false }
     ]
