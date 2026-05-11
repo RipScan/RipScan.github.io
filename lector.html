@@ -65,7 +65,6 @@
         .btn { color: white; text-decoration: none; background: #1a1a1a; padding: 10px 20px; border-radius: 6px; font-weight: 600; border: 1px solid #333; transition: 0.3s; }
         .btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 
-        /* NUEVA PROTECCIÓN: Capa invisible sobre las imágenes */
         .img-wrapper {
             position: relative;
             width: 100%;
@@ -78,13 +77,10 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 5;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='); /* Imagen 1x1 transparente */
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='); 
         }
 
-        .lector-img { 
-            width: 100%; 
-            display: block;
-        }
+        .lector-img { width: 100%; display: block; }
 
         #comentarios-section {
             max-width: 800px;
@@ -136,17 +132,10 @@
 
     <div id="comentarios-section">
         <h3 style="color: var(--accent-primary); margin-bottom: 20px;">Comentarios del Capítulo</h3>
-        <script type="text/javascript">
-            var idcomments_acct = '27b2e72b91699e3f8ac5d0d5f027dafc';
-            var idcomments_post_id = 'ripscan-' + (new URLSearchParams(window.location.search).get('manga')) + '-cap-' + (new URLSearchParams(window.location.search).get('cap'));
-            var idcomments_post_url = window.location.href;
-        </script>
-        <span id="IDCommentsPostTitle" style="display:none"></span>
-        <script type='text/javascript' src='https://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+        <div id="intensedebate-container"></div>
     </div>
 
     <script>
-        // LÓGICA DEL LECTOR
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
@@ -176,24 +165,47 @@
         const id = p.get('manga'), cap = parseInt(p.get('cap'));
         
         document.getElementById('btnInfo').href = `info.html?manga=${id}`;
-        document.getElementById('btnNext').href = `lector.html?manga=${id}&cap=${cap + 1}`;
         
+        // Configuración de Anterior
         if(cap > 1) {
             document.getElementById('btnPrev').href = `lector.html?manga=${id}&cap=${cap - 1}`;
         } else {
             document.getElementById('btnPrev').style.display = "none";
         }
 
-        // Crear el contenedor de cada imagen con el "protector" encima
+        // Lógica de Validación de Capítulos (Botón Siguiente)
+        fetch('mangas.json').then(r => r.json()).then(data => {
+            const mangaActual = data.find(m => m.id === id);
+            const btnNext = document.getElementById('btnNext');
+
+            if (mangaActual && cap < mangaActual.totalCaps) {
+                btnNext.href = `lector.html?manga=${id}&cap=${cap + 1}`;
+            } else {
+                btnNext.style.opacity = "0.5";
+                btnNext.style.pointerEvents = "none";
+                btnNext.innerText = "Fin del Manhwa";
+            }
+        });
+
+        // Carga de Comentarios
+        const commentContainer = document.getElementById('intensedebate-container');
+        window.idcomments_acct = '27b2e72b91699e3f8ac5d0d5f027dafc';
+        window.idcomments_post_id = `ripscan-${id}-cap-${cap}`;
+        window.idcomments_post_url = window.location.href;
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://www.intensedebate.com/js/genericCommentWrapperV2.js';
+        commentContainer.appendChild(script);
+
+        // Lógica de carga de imágenes protegidas
         function appendProtectedImage(src) {
             const wrapper = document.createElement('div');
             wrapper.className = 'img-wrapper';
-            
             const img = new Image();
             img.src = src;
             img.className = "lector-img";
-            img.alt = `ripscan_cap_${cap}_page`; // Nombre visual falso
-            
+            img.alt = `ripscan_cap_${cap}_page`;
             wrapper.appendChild(img);
             document.getElementById('container').appendChild(wrapper);
         }
