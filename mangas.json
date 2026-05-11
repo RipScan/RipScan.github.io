@@ -15,7 +15,7 @@
     "id": "mago-arena",
     "titulo": "El mago de arena del desierto abrasador",
     "imagen": "img/portadas/mago-arena.jpg",
-    "totalCaps": 20,
+    "totalCaps": 21,
     "estado": "ongoing",
     "generos": ["Accion", "Fantasia", "Aventura", "Misterio"],
     "sinopsis": "La Tierra fue terraformada y los océanos se evaporaron. Zeon es el último mago de arena que queda en este mundo desertificado. El mundo lo llama el Espectro de Arena.",
