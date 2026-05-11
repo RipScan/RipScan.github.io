@@ -166,7 +166,6 @@
         
         document.getElementById('btnInfo').href = `info.html?manga=${id}`;
         
-        // Configuración de Anterior
         if(cap > 1) {
             document.getElementById('btnPrev').href = `lector.html?manga=${id}&cap=${cap - 1}`;
         } else {
@@ -198,7 +197,7 @@
         script.src = 'https://www.intensedebate.com/js/genericCommentWrapperV2.js';
         commentContainer.appendChild(script);
 
-        // Lógica de carga de imágenes protegidas
+        // Lógica de carga de imágenes con sufijo _resultado.webp
         function appendProtectedImage(src) {
             const wrapper = document.createElement('div');
             wrapper.className = 'img-wrapper';
@@ -222,7 +221,7 @@
         }
 
         function loadNumberedPages(pageNumber) {
-            const filename = `${String(pageNumber).padStart(3, '0')}.png`;
+            const filename = `${String(pageNumber).padStart(3, '0')}_resultado.webp`;
             const path = `mangas/${id}/cap-${cap}/${filename}`;
             const imgCheck = new Image();
             imgCheck.src = path;
@@ -231,11 +230,12 @@
                 loadNumberedPages(pageNumber + 1); 
             };
             imgCheck.onerror = () => { 
-                loadSingleImage('999_creditos.png');
+                loadSingleImage('999_creditos_resultado.webp');
             };
         }
 
-        loadSingleImage('000_creditos.png', () => {
+        // Inicia la carga con los créditos iniciales específicos
+        loadSingleImage('000_creditos_resultado.webp', () => {
             loadNumberedPages(1);
         });
 
