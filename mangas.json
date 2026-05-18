@@ -15,16 +15,16 @@
     "id": "mago-arena",
     "titulo": "El mago de arena del desierto abrasador",
     "imagen": "img/portadas/mago-arena.jpg",
-    "totalCaps": 21,
+    "totalCaps": 22,
     "estado": "ongoing",
     "generos": ["Accion", "Fantasia", "Aventura", "Misterio"],
     "sinopsis": "La Tierra fue terraformada y los océanos se evaporaron. Zeon es el último mago de arena que queda en este mundo desertificado. El mundo lo llama el Espectro de Arena.",
     "ultimosCaps": [
+      { "numero": 22, "fecha": "2026-05-18T18:02:00", "bloqueado": false },
       { "numero": 21, "fecha": "2026-05-10T03:48:00", "bloqueado": false },
       { "numero": 20, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
       { "numero": 19, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
-      { "numero": 18, "fecha": "2026-05-03T15:00:00", "bloqueado": false },
-      { "numero": 17, "fecha": "2026-05-03T15:00:00", "bloqueado": false }
+      { "numero": 18, "fecha": "2026-05-03T15:00:00", "bloqueado": false }
     ]
   },
   {
