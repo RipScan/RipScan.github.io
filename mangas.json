@@ -47,16 +47,16 @@
     "id": "pequeno-mundo",
     "titulo": "Un pequeño mundo lleno de diversion",
     "imagen": "img/portadas/pequeno-mundo.jpg",
-    "totalCaps": 15,
+    "totalCaps": 16,
     "estado": "ongoing",
     "generos": ["Accion", "Aventura", "Ecchi", "Reencarnacion"],
     "sinopsis": "Mientras la humanidad buscaba un camino hacia la evolución, yo me convertí en su pionero. ¡Este es el viaje de un jugador que dobla el mundo a su voluntad como si fuera un juego!",
     "ultimosCaps": [
+      { "numero": 16, "fecha": "2026-05-19T22:35:00", "bloqueado": false },
       { "numero": 15, "fecha": "2026-05-17T16:21:00", "bloqueado": false },
       { "numero": 14, "fecha": "2026-05-14T12:14:00", "bloqueado": false },
       { "numero": 13, "fecha": "2026-05-10T01:42:00", "bloqueado": false },
-      { "numero": 12, "fecha": "2026-05-08T01:18:00", "bloqueado": false },
-      { "numero": 11, "fecha": "2026-05-03T19:28:00", "bloqueado": false }
+      { "numero": 12, "fecha": "2026-05-08T01:18:00", "bloqueado": false }
     ]
   }
 ]
