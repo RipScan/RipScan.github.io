@@ -3,11 +3,12 @@
     "id": "rey-hongo",
     "titulo": "El ascenso del Rey Hongo",
     "imagen": "img/portadas/rey-hongo.jpg",
-    "totalCaps": 9,
+    "totalCaps": 10,
     "estado": "ongoing",
     "generos": ["Accion", "Fantasia", "Aventura", "Sistema de Niveles"],
     "sinopsis": "Yang Jun transmigra al cuerpo de un líder hombre-hongo en las mazmorras más bajas. Para sobrevivir, cultiva soldados hongo y guía a su pueblo en una conquista para elevarse sobre los demás.",
     "ultimosCaps": [
+      { "numero": 10, "fecha": "2026-05-19T23:20:00", "bloqueado": false },
       { "numero": 9, "fecha": "2026-05-09T13:22:00", "bloqueado": false }
     ]
   },
